@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Информатика тесті — 5 сынып</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",Roboto,Arial,sans-serif;background:#eef2f7;color:#263238}
+header{background:#1565c0;color:#fff;padding:14px 20px;font-size:20px;font-weight:600}
+.wrap{max-width:900px;margin:20px auto;padding:0 12px}
+.card{background:#fff;border:1px solid #d5dde8;border-radius:8px;padding:22px;margin-bottom:16px}
+h2{margin:0 0 16px;font-size:20px}
+label.f{display:block;margin:12px 0 4px;font-weight:600;font-size:14px}
+input[type=text],input[type=date]{width:100%;padding:10px;border:1px solid #b0bec5;border-radius:6px;font-size:16px}
+.btn{background:#1e88e5;color:#fff;border:0;border-radius:6px;padding:11px 24px;font-size:16px;cursor:pointer;margin:14px 10px 0 0}
+.btn:hover{background:#1565c0}
+.btn.alt{background:#43a047}.btn.alt:hover{background:#2e7d32}
+.btn:disabled{background:#b0bec5;cursor:default}
+.hide{display:none}
+.info{display:flex;flex-wrap:wrap;gap:6px 24px;font-size:14px;color:#37474f}
+.info b{color:#1565c0}
+.layout{display:flex;gap:16px;align-items:flex-start}
+.nav{display:flex;flex-direction:column;gap:6px}
+.nav span{width:38px;height:38px;border-radius:6px;background:#e3eaf3;display:flex;align-items:center;justify-content:center;font-weight:600;border:2px solid transparent}
+.nav span.cur{border-color:#1e88e5;background:#fff}
+.nav span.ok{background:#c8e6c9}.nav span.bad{background:#ffcdd2}
+.main{flex:1;min-width:0}
+.qn{color:#1565c0;font-weight:600;margin-bottom:6px}
+.q{font-size:19px;margin-bottom:16px;line-height:1.4}
+.opt{display:flex;align-items:center;gap:10px;padding:12px 14px;margin:8px 0;border:1px solid #cfd8dc;border-radius:6px;cursor:pointer;background:#fafcff}
+.opt:hover{background:#e3f2fd}
+.opt .dot{width:18px;height:18px;border-radius:50%;border:2px solid #78909c;flex:none}
+.opt.sel .dot{background:#1e88e5;border-color:#1e88e5}
+.opt.right{background:#e8f5e9;border-color:#43a047}
+.opt.wrong{background:#ffebee;border-color:#e53935}
+.locked .opt{cursor:default}
+.fb{display:flex;align-items:center;gap:12px;margin-top:14px;font-size:18px;font-weight:600;min-height:56px}
+.fb .em{font-size:48px;line-height:1;animation:pop .35s}
+.fb.good{color:#2e7d32}.fb.no{color:#c62828}
+@keyframes pop{from{transform:scale(.3)}to{transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){.fb .em{animation:none}}
+.big{font-size:80px;text-align:center}
+.score{font-size:22px;text-align:center;margin:8px 0}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+td{padding:8px;border-bottom:1px solid #e0e6ee;font-size:15px}
+@media(max-width:560px){.layout{flex-direction:column}.nav{flex-direction:row}}
+</style>
+</head>
+<body>
+<header>Информатика • 5 сынып • Жиынтық тест</header>
+<div class="wrap">
+
+<!-- 1. Тіркелу -->
+<div id="s1" class="card">
+  <h2>Оқушы деректері</h2>
+  <label class="f" for="name">Аты-жөні</label>
+  <input type="text" id="name" placeholder="Мысалы: Асан Әсенов">
+  <label class="f" for="cls">Сыныбы</label>
+  <input type="text" id="cls" placeholder="Мысалы: 5 «А»">
+  <label class="f" for="date">Күні</label>
+  <input type="date" id="date">
+  <div id="err" style="color:#c62828;margin-top:10px"></div>
+  <button class="btn" onclick="start(0)">1-нұсқа</button>
+  <button class="btn alt" onclick="start(1)">2-нұсқа</button>
+</div>
+
+<!-- 2. Тест -->
+<div id="s2" class="hide">
+  <div class="card info" id="who"></div>
+  <div class="card layout">
+    <div class="nav" id="nav"></div>
+    <div class="main" id="box"></div>
+  </div>
+</div>
+
+<!-- 3. Нәтиже -->
+<div id="s3" class="card hide"></div>
+
+</div>
+<script>
+const TESTS=[
+ {title:"1-нұсқа",qs:[
+  {q:"Компьютер экранынан көзге дейінгі ұсынылатын қашықтық қандай?",a:["10–15 см","50–70 см","1,5–2 метр","5 см"],c:1},
+  {q:"Қай нұсқа мәтіндік ақпаратқа жатады?",a:["Фотосурет","Ертегі мәтіні","Ән","Мультфильм"],c:1},
+  {q:"Компьютерде ақпарат қандай кодпен сақталады және тасымалданады?",a:["Морзе коды","Екілік код (0 және 1)","Әріптік код","Түрлі-түсті код"],c:1},
+  {q:"Абай Құнанбайұлы туралы нақты ақпарат табу үшін қандай іздеу сұранысы ең дұрыс?",a:["Абай","ақын","Абай Құнанбайұлының өмірбаяны","кітап"],c:2},
+  {q:"Оң қолымен жұмыс істейтін оқушыға жарық қай жақтан түскені дұрыс?",a:["Монитордың артынан","Сол жақтан","Тікелей көзге","Жарық қажет емес"],c:1}
+ ]},
+ {title:"2-нұсқа",qs:[
+  {q:"Компьютерде жұмыс істегенде аяқ қалай орналасуы керек?",a:["Еденге немесе тіреуішке тіреліп, тізе тік бұрыш жасайды","Айқастырылып отырады","Асылып тұрады","Орындыққа көтеріледі"],c:0},
+  {q:"Қай нұсқа дыбыстық ақпаратқа жатады?",a:["Плакат","Әуен","Есеп","Кітап"],c:1},
+  {q:"Екілік кодта қандай цифрлар қолданылады?",a:["1-ден 9-ға дейін","0 және 1","0-ден 9-ға дейін","2 және 3"],c:1},
+  {q:"«Эргономика ережелері» туралы нақты ақпарат табу үшін қай сұраныс ең дұрыс?",a:["қызық","компьютер","ақпарат","5 сынып информатика эргономика ережелері"],c:3},
+  {q:"Монитор қалай орналасуы керек?",a:["Көз деңгейінен сәл төмен","Көзден әлдеқайда жоғары","Еденге жақын","Жан-жақтан бұрыш жасап"],c:0}
+ ]}
+];
+const GOOD=["😊 Дұрыс! Жарайсың!","😃 Тамаша! Дұрыс жауап!","🤩 Керемет! Өте жақсы!"];
+const BAD=["😢 Қате. Ештеңе етпейді!","😕 Дұрыс емес. Қайта көр!","🙁 Қате жауап. Келесіде болады!"];
+let T,qs,i,res,stu;
+const $=id=>document.getElementById(id);
+const esc=s=>s.replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
+function shuffle(a){a=a.slice();for(let k=a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[a[k],a[j]]=[a[j],a[k]]}return a}
+$("date").value=new Date().toISOString().slice(0,10);
+
+function start(v){
+  const n=$("name").value.trim(),c=$("cls").value.trim(),d=$("date").value;
+  if(!n||!c||!d){$("err").textContent="Аты-жөніңізді, сыныбыңызды және күнді толтырыңыз.";return}
+  const dd=d.split("-").reverse().join(".");
+  stu={n,c,d:dd,v:TESTS[v].title};T=v;
+  qs=TESTS[v].qs.map(x=>{const o=shuffle(x.a.map((t,k)=>({t,ok:k===x.c})));return{q:x.q,o}});
+  res=Array(qs.length).fill(null);i=0;
+  $("who").innerHTML=`<span>Оқушы: <b>${esc(n)}</b></span><span>Сынып: <b>${esc(c)}</b></span><span>Күні: <b>${dd}</b></span><span>Нұсқа: <b>${stu.v}</b></span>`;
+  $("s1").classList.add("hide");$("s2").classList.remove("hide");$("s3").classList.add("hide");
+  show();
+}
+
+function nav(){
+  $("nav").innerHTML=qs.map((_,k)=>`<span class="${k===i?"cur":""} ${res[k]===true?"ok":res[k]===false?"bad":""}">${k+1}</span>`).join("");
+}
+
+function show(){
+  nav();
+  const q=qs[i],last=i===qs.length-1;
+  $("box").className="main";
+  $("box").innerHTML=`<div class="qn">Сұрақ ${i+1} / ${qs.length}</div>
+   <div class="q">${esc(q.q)}</div>
+   <div id="opts">${q.o.map((o,k)=>`<div class="opt" onclick="pick(${k})"><span class="dot"></span><span>${esc(o.t)}</span></div>`).join("")}</div>
+   <div class="fb" id="fb"></div>
+   <button class="btn" id="next" disabled onclick="next()">${last?"Аяқтау":"Келесі сұрақ"}</button>`;
+}
+
+function pick(k){
+  if(res[i]!==null)return;
+  const q=qs[i],ok=q.o[k].ok;
+  res[i]=ok;
+  document.querySelectorAll(".opt").forEach((el,j)=>{
+    if(q.o[j].ok)el.classList.add("right");
+    if(j===k&&!ok)el.classList.add("wrong");
+    if(j===k)el.classList.add("sel");
+  });
+  $("opts").classList.add("locked");
+  const m=(ok?GOOD:BAD)[Math.floor(Math.random()*3)].split(" ");
+  const em=m.shift();
+  $("fb").className="fb "+(ok?"good":"no");
+  $("fb").innerHTML=`<span class="em">${em}</span><span>${m.join(" ")}</span>`;
+  $("next").disabled=false;
+  nav();
+}
+
+function next(){
+  if(i<qs.length-1){i++;show()}else finish();
+}
+
+function finish(){
+  const s=res.filter(Boolean).length,n=qs.length,p=Math.round(s/n*100);
+  const em=p>=80?"🏆":p>=60?"😊":p>=40?"🙂":"😢";
+  const g=p>=90?"5 («өте жақсы»)":p>=70?"4 («жақсы»)":p>=50?"3 («қанағаттанарлық»)":"2 (қайта қарау керек)";
+  $("s2").classList.add("hide");$("s3").classList.remove("hide");
+  $("s3").innerHTML=`<h2>Тест нәтижесі</h2>
+   <div class="big">${em}</div>
+   <div class="score">Дұрыс жауап: <b>${s}</b> / ${n} (${p}%)<br>Бағасы: <b>${g}</b></div>
+   <table>
+    <tr><td>Аты-жөні</td><td><b>${esc(stu.n)}</b></td></tr>
+    <tr><td>Сыныбы</td><td><b>${esc(stu.c)}</b></td></tr>
+    <tr><td>Күні</td><td><b>${stu.d}</b></td></tr>
+    <tr><td>Нұсқа</td><td><b>${stu.v}</b></td></tr>
+    ${qs.map((q,k)=>`<tr><td>${k+1}-сұрақ</td><td>${res[k]?"😊 Дұрыс":"😢 Қате"}</td></tr>`).join("")}
+   </table>
+   <button class="btn" onclick="start(T)">Қайта тапсыру</button>
+   <button class="btn alt" onclick="location.reload()">Басты бет</button>`;
+}
+</script>
+</body>
+</html>
